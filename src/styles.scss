@@ -1,1 +1,6 @@
 @import 'bootstrap/scss/bootstrap';
+
+.label-campo-obrigatorio::after {
+  content: " *";
+  color: #cb4335;
+}

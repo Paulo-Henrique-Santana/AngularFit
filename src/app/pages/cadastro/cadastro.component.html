@@ -1,0 +1,89 @@
+<div class="card w-25">
+  <div class="card-header">
+    <h1 class="fs-2 text-center">Cadastro</h1>
+  </div>
+  <div class="card-body py-4 px-5">
+    <form [formGroup]="form">
+      <div class="mb-3">
+        <label for="nome" class="form-label label-campo-obrigatorio"
+          >Nome</label
+        >
+        <div>
+          <input
+            type="text"
+            class="form-control"
+            id="nome"
+            formControlName="nome"
+            required
+            autocomplete="username"
+          />
+          <app-msg-erro-form-control [control]="form.controls['nome']">
+          </app-msg-erro-form-control>
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label for="email" class="form-label label-campo-obrigatorio"
+          >Email</label
+        >
+        <div>
+          <input
+            type="email"
+            class="form-control"
+            id="email"
+            formControlName="email"
+            required
+            autocomplete="email"
+          />
+          <app-msg-erro-form-control [control]="form.controls['email']">
+          </app-msg-erro-form-control>
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label for="senha" class="form-label label-campo-obrigatorio"
+          >Senha</label
+        >
+        <div>
+          <input
+            type="password"
+            class="form-control"
+            id="senha"
+            formControlName="senha"
+            autocomplete="new-password"
+          />
+          <app-msg-erro-form-control [control]="form.controls['senha']">
+          </app-msg-erro-form-control>
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label for="confirmar-senha" class="form-label label-campo-obrigatorio"
+          >Confirmar senha</label
+        >
+        <div>
+          <input
+            type="password"
+            class="form-control"
+            id="confirmar-senha"
+            formControlName="confirmarSenha"
+            autocomplete="new-password"
+          />
+          <app-msg-erro-form-control
+            [control]="form.controls['confirmarSenha']"
+            [erros]="msgsErrosConfirmarSenha"
+          >
+          </app-msg-erro-form-control>
+        </div>
+      </div>
+
+      <button
+        class="btn btn-primary w-100 my-3"
+        type="button"
+        (click)="cadastrar()"
+      >
+        Cadastrar-se
+      </button>
+    </form>
+  </div>
+</div>
