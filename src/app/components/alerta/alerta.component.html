@@ -1,0 +1,8 @@
+@if(exibirAlerta) {
+<ngb-alert
+  class="position-absolute bottom-0 start-50 translate-middle"
+  [type]="alertaConfigs!.tipo"
+  (closed)="this.exibirAlerta = false"
+  >{{ alertaConfigs!.msg }}</ngb-alert
+>
+}

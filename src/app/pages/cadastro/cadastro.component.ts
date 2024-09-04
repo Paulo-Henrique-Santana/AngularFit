@@ -1,5 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { AlertaService } from '../../components/alerta/services/alerta.service';
 import { MsgErroFormControlComponent } from '../../components/msg-erro-form-control/msg-erro-form-control.component';
 import { UsuarioService } from '../../services/usuario.service';
 
@@ -13,6 +15,8 @@ import { UsuarioService } from '../../services/usuario.service';
 export class CadastroComponent {
   fb = inject(FormBuilder);
   usuarioService = inject(UsuarioService);
+  alertaService = inject(AlertaService);
+  router = inject(Router);
 
   form: FormGroup = this.fb.group({
     nome: ['', Validators.required],
@@ -39,7 +43,8 @@ export class CadastroComponent {
 
     this.usuarioService.cadastrar(this.form.value).subscribe({
       next: () => {
-        
+        this.alertaService.alertaConfigs.set({ msg: 'Usuário cadastrado com sucesso', tipo: 'success' });
+        this.router.navigate(['/login'])
       }
     })
   }
