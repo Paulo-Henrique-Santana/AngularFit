@@ -1,13 +1,18 @@
 import { Component, inject, OnInit } from '@angular/core';
 import {
-  AbstractControl,
   FormBuilder,
   FormGroup,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
 import { Router } from '@angular/router';
-import { debounceTime, distinctUntilChanged, filter, switchMap } from 'rxjs';
+import {
+  combineLatest,
+  debounceTime,
+  distinctUntilChanged,
+  filter,
+  switchMap,
+} from 'rxjs';
 import { AlertaService } from '../../components/alerta/services/alerta.service';
 import { MsgErroFormControlComponent } from '../../components/msg-erro-form-control/msg-erro-form-control.component';
 import { UsuarioService } from '../../services/usuario.service';
@@ -29,10 +34,7 @@ export class CadastroComponent implements OnInit {
     nome: ['', Validators.required],
     email: ['', Validators.required],
     senha: ['', Validators.required],
-    confirmarSenha: [
-      '',
-      [Validators.required, this.validadorConfirmarSenha.bind(this)],
-    ],
+    confirmarSenha: ['', [Validators.required]],
   });
 
   msgsErrosConfirmarSenha = {
@@ -43,10 +45,11 @@ export class CadastroComponent implements OnInit {
   };
 
   ngOnInit() {
-    this.validadorEmailCadastrado();
+    this.validarEmailCadastrado();
+    this.validarConfirmacaoSenha();
   }
 
-  validadorEmailCadastrado() {
+  validarEmailCadastrado() {
     const controlEmail = this.form.get('email');
 
     controlEmail?.valueChanges
@@ -72,10 +75,23 @@ export class CadastroComponent implements OnInit {
       });
   }
 
-  validadorConfirmarSenha(control: AbstractControl) {
-    return control.value !== this.form?.value.senha
-      ? { senhaDiferente: true }
-      : null;
+  validarConfirmacaoSenha() {
+    const controlSenha = this.form.get('senha')!;
+    const controlConfirmarSenha = this.form.get('confirmarSenha')!;
+
+    combineLatest([
+      controlSenha.valueChanges,
+      controlConfirmarSenha.valueChanges,
+    ]).subscribe(([senha, confirmarSenha]) => {
+      if (senha !== confirmarSenha) {
+        controlConfirmarSenha.setErrors({
+          ...controlConfirmarSenha.errors,
+          senhaDiferente: true,
+        });
+      } else {
+        delete controlConfirmarSenha.errors?.['senhaDiferente'];
+      }
+    });
   }
 
   cadastrar() {
