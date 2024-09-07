@@ -10,15 +10,12 @@ import { AbstractControl } from '@angular/forms';
 })
 export class MsgErroFormControlComponent {
   @Input({ required: true }) control!: AbstractControl;
-  @Input() set erros(value: { [key: string]: string }) {
-    this.errosMsgs = {
-      ...this.errosMsgs,
-      ...value
-    }
-  }
 
   errosMsgs = {
     required: 'Campo obrigatório',
+    email: 'Email inválido',
+    senhaDiferente: 'As senhas devem ser iguais',
+    emailCadastrado: 'E-mail já cadastrado',
   } as { [key: string]: string };
 
   get errorMessage() {

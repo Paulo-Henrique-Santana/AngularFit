@@ -35,7 +35,7 @@
             required
             autocomplete="email"
           />
-          <app-msg-erro-form-control [control]="form.controls['email']" [erros]="msgsErrosEmail">
+          <app-msg-erro-form-control [control]="form.controls['email']">
           </app-msg-erro-form-control>
         </div>
       </div>
@@ -71,7 +71,6 @@
           />
           <app-msg-erro-form-control
             [control]="form.controls['confirmarSenha']"
-            [erros]="msgsErrosConfirmarSenha"
           >
           </app-msg-erro-form-control>
         </div>

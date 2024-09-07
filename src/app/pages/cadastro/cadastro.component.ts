@@ -32,17 +32,10 @@ export class CadastroComponent implements OnInit {
 
   form: FormGroup = this.fb.group({
     nome: ['', Validators.required],
-    email: ['', Validators.required],
+    email: ['', [Validators.required, Validators.email]],
     senha: ['', Validators.required],
-    confirmarSenha: ['', [Validators.required]],
+    confirmarSenha: ['', Validators.required],
   });
-
-  msgsErrosConfirmarSenha = {
-    senhaDiferente: 'As senhas devem ser iguais',
-  };
-  msgsErrosEmail = {
-    emailCadastrado: 'E-mail já cadastrado',
-  };
 
   ngOnInit() {
     this.validarEmailCadastrado();
